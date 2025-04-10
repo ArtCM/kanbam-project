@@ -3,7 +3,7 @@ import "./globals.css";
 import "./normalize.css";
 
 export const metadata: Metadata = {
-  title: "kanban",
+  title: "kanbam",
   description: "Para você que deseja organizar suas tarefas!",
   icons: {
     icon: "/favicon.ico",

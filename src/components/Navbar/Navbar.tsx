@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="flex items-center justify-start gap-20 px-6 py-4 bg-white shadow-sm">
+      <header className="flex items-center flex-col lg:flex-row justify-center w-screen lg:w-full lg:justify-start lg:gap-20 lg:px-6 py-4 bg-white shadow-sm">
         <h1 className="text-xl font-semibold">
           {mounted
             ? activeProject?.name || "Nome do Projeto"
