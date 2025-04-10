@@ -1,7 +1,47 @@
 {
   "profile": {
-    "userName": null,
-    "userRole": null,
-    "projects": []
+    "userName": "TESTE",
+    "userRole": "321321",
+    "projects": [
+      {
+        "id": "ef6aeaf0-45ab-416e-ae3a-49c0b3de299d",
+        "name": "teste",
+        "columns": [
+          {
+            "id": "d1816aa9-d173-44c3-a04b-86765cc589d9",
+            "title": "teste",
+            "cards": [
+              {
+                "id": "927ea9de-182d-4ea0-954b-38ca7e378efb",
+                "title": "teste",
+                "description": "teste",
+                "assignedTo": "teste",
+                "status": "d1816aa9-d173-44c3-a04b-86765cc589d9",
+                "priority": "Baixa"
+              }
+            ]
+          },
+          {
+            "id": "dd4cf2e9-5740-42c6-b6a5-70abd37ae403",
+            "title": "teste",
+            "cards": [
+              {
+                "id": "5c648ee8-c1eb-4f0d-9730-db5819571352",
+                "title": "test22222222222222222222222222222222222222222222222",
+                "description": "testeteteteeataedsdasdddddsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+                "assignedTo": "teste",
+                "status": "dd4cf2e9-5740-42c6-b6a5-70abd37ae403",
+                "priority": "Média"
+              }
+            ]
+          },
+          {
+            "id": "c7d4cf1f-b413-41fd-91dc-cf97b21549dc",
+            "title": "teste",
+            "cards": []
+          }
+        ]
+      }
+    ]
   }
 }

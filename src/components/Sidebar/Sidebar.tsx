@@ -6,14 +6,24 @@ import EditUserModal from "../Modal/EditUserModal";
 import Image from "next/image";
 
 const Sidebar = () => {
-  const { projects, activeProjectId, switchProject } = useKanbanStore();
+  const { projects, activeProjectId, switchProject, removeProject } =
+    useKanbanStore();
   const { userName, userRole } = useKanbanStore();
   const [isEditing, setIsEditing] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Estado para controlar a visibilidade
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const handleDeleteProject = (projectId: string) => {
+    const confirmDelete = window.confirm(
+      "Você tem certeza que deseja excluir este projeto?"
+    );
+    if (confirmDelete) {
+      removeProject(projectId);
+    }
+  };
 
   return (
     <>
-      <div className="z-[10000]">
+      <div className="z-[30]">
         <button
           className="lg:hidden h-[40px] w-[40px] flex items-center justify-center p-4 absolute top-10 right-4 z-50 bg-blue-500 text-white rounded-full"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -62,6 +72,16 @@ const Sidebar = () => {
                     }`}
                   >
                     {project.name}
+                    
+                    <button
+                      className="text-sm text-red-600 ml-4"
+                      onClick={(e) => {
+                        e.stopPropagation(); 
+                        handleDeleteProject(project.id);
+                      }}
+                    >
+                      🗑️
+                    </button>
                   </li>
                 ))}
               </ul>

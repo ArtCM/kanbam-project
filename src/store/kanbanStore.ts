@@ -22,6 +22,7 @@ interface KanbanState {
   // Ações
   createProject: (name: string) => void;
   switchProject: (id: string) => void;
+  removeProject: (projectId: string) => void;
 
   addColumn: (title: string) => void;
   removeColumn: (columnId: string) => void;
@@ -71,6 +72,14 @@ export const useKanbanStore = create<KanbanState>()(
         set({ activeProjectId: id });
       },
 
+      removeProject: (projectId: string) => {
+        set((state) => ({
+          projects: state.projects.filter(
+            (project) => project.id !== projectId
+          ),
+        }));
+      },
+
       getActiveProject: () => {
         const { projects, activeProjectId } = get();
         return projects.find((p) => p.id === activeProjectId) ?? null;
@@ -93,7 +102,7 @@ export const useKanbanStore = create<KanbanState>()(
         );
 
         set({ projects: updatedProjects });
-        console.log("Projetos atualizados:", updatedProjects); 
+        console.log("Projetos atualizados:", updatedProjects);
       },
 
       removeColumn: (columnId) => {
@@ -239,7 +248,7 @@ export const useKanbanStore = create<KanbanState>()(
         activeProjectId: state.activeProjectId,
       }),
       onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true)
+        state?.setHasHydrated(true);
       },
     }
   )
