@@ -1,10 +1,15 @@
-// src/app/page.tsx
+'use client'
+
+import { useSyncToBackend } from '@/hooks/useSyncToBackend'
+
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Board from "../components/Board/Board";
 import WelcomeModal from "../components/Modal/WelcomeModal";
 
 export default function HomePage() {
+  useSyncToBackend()
+
   return (
     <div className="flex h-screen w-full overflow-y-hidden bg-gray-100">
       <Sidebar />

@@ -93,6 +93,7 @@ export const useKanbanStore = create<KanbanState>()(
         );
 
         set({ projects: updatedProjects });
+        console.log("Projetos atualizados:", updatedProjects); 
       },
 
       removeColumn: (columnId) => {
