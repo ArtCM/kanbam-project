@@ -26,7 +26,7 @@ const WelcomeModal = () => {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+      <div className="bg-white p-6 flex flex-col gap-4 rounded shadow-md w-full max-w-md">
         <h2 className="text-lg font-semibold mb-4">Bem-vindo ao Kanbam!</h2>
         <p className="mb-4 text-sm text-gray-600">Informe seus dados para personalizar a experiência:</p>
 
