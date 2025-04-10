@@ -12,9 +12,6 @@ interface KanbanState {
   activeProjectId: string | null
   draggedCard: DraggedCard | null
 
-  // Getters
-  activeProject: Project | null
-
   // Ações
   createProject: (name: string) => void
   switchProject: (id: string) => void
@@ -28,6 +25,9 @@ interface KanbanState {
 
   setDraggedCard: (cardId: string, columnId: string) => void
   clearDraggedCard: () => void
+
+  // Getter como função
+  getActiveProject: () => Project | null
 }
 
 export const useKanbanStore = create<KanbanState>()(
@@ -36,11 +36,6 @@ export const useKanbanStore = create<KanbanState>()(
       projects: [],
       activeProjectId: null,
       draggedCard: null,
-
-      get activeProject() {
-        const { projects, activeProjectId } = get()
-        return projects.find((p) => p.id === activeProjectId) ?? null
-      },
 
       createProject: (name) => {
         const newProject: Project = {
@@ -57,6 +52,11 @@ export const useKanbanStore = create<KanbanState>()(
 
       switchProject: (id) => {
         set({ activeProjectId: id })
+      },
+
+      getActiveProject: () => {
+        const { projects, activeProjectId } = get()
+        return projects.find((p) => p.id === activeProjectId) ?? null
       },
 
       addColumn: (title) => {
