@@ -17,6 +17,8 @@ Ver: 0.0.1 - Last update: 10/04/2025
 
 <div markdown="1">
 
+![Preview](preview.jpg)
+
 # Sobre
 
 O projeto consiste na criação de um kanban com criação de projetos, colunas, cards e com a opção de drag and drop sem a utilização de bibliotecas de estilo.
@@ -36,6 +38,7 @@ de 04/2025.
 - Git
 - Normalize.css v8.0.1
 - Zustand
+- JSON server
 
 <br>
 
@@ -51,7 +54,7 @@ https://www.figma.com/design/djuOj0xCgr3Vmk5kjBSsLq/kanban-project?m=auto&t=A3gd
 
 # Deploy
 
-## [Clique aqui e veja a aplicação online](https://biblioteca-web-eta.vercel.app)
+## [Clique aqui e veja a aplicação online](https://kanbam-project.vercel.app)
 
 <br>
 
@@ -70,6 +73,15 @@ npm run dev
 ```
 
 ---
+
+### Instruções para rodar o `json-server`
+
+```
+json-server --watch db.json --port 3001
+```
+
+Isso criará um servidor local rodando em `http://localhost:3001` com os dados armazenados no `db.json`. 
+
 
 <br>
 
