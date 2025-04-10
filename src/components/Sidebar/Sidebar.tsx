@@ -3,6 +3,7 @@
 import { useKanbanStore } from "@/store/kanbanStore";
 import { useState } from "react";
 import EditUserModal from "../Modal/EditUserModal";
+import Image from "next/image";
 
 const Sidebar = () => {
   const { projects, activeProjectId, switchProject } = useKanbanStore();
@@ -11,18 +12,23 @@ const Sidebar = () => {
 
   return (
     <>
-      <aside className="w-64 h-full shrink-0 bg-white border-r shadow-sm flex flex-col">
+      <aside className="w-64 h-full shrink-0 bg-[var(--primary)] shadow-md flex flex-col">
         <div
-          className="p-4 border-b cursor-pointer"
+          className="p-4 border-b-[5px] border-white cursor-pointer"
           onClick={() => setIsEditing(true)}
         >
-          <h2 className="text-lg font-bold">Kanbam</h2>
+          <Image
+            src="/dark-logo.png"
+            width={200}
+            height={100}
+            alt="Página em Construção"
+          />
           <p className="text-sm text-gray-500">{userName ?? "Usuário"}</p>
           <p className="text-xs text-gray-400">{userRole ?? "Cargo"}</p>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4">
-          <h3 className="text-xs font-semibold text-gray-400 uppercase mb-2">
+          <h3 className="text-xl font-semibold text-center text-gray-400 mb-2">
             Projetos
           </h3>
 
@@ -36,10 +42,10 @@ const Sidebar = () => {
                 <li
                   key={project.id}
                   onClick={() => switchProject(project.id)}
-                  className={`p-2 text-sm rounded cursor-pointer ${
+                  className={`p-2 text-md rounded text-center cursor-pointer ${
                     project.id === activeProjectId
-                      ? "bg-blue-100 text-blue-700 font-semibold"
-                      : "hover:bg-gray-100"
+                      ? "bg-blue-200 text-blue-700 font-semibold"
+                      : "hover:bg-gray-300 bg-gray-200"
                   }`}
                 >
                   {project.name}
@@ -49,13 +55,13 @@ const Sidebar = () => {
           )}
         </div>
 
-        <div className="p-4 border-t">
-          <button className="w-full p-2 text-sm bg-gray-100 rounded hover:bg-gray-200">
-            ⚙️ Configurações (em breve)
+        <div className="p-4 border-t-[5px] border-white">
+          <button className="w-full p-2 flex items-center justify-center gap-2 py-4 text-sm bg-gray-100 rounded hover:bg-gray-200">
+            <span>⚙️</span> Configurações <br /> (Em breve)
           </button>
         </div>
       </aside>
-      <EditUserModal isOpen={isEditing} onClose={() => setIsEditing(false)} />;
+      <EditUserModal isOpen={isEditing} onClose={() => setIsEditing(false)} />
     </>
   );
 };

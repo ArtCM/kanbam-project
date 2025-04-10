@@ -36,7 +36,7 @@ const Column = ({ column }: ColumnProps) => {
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className="w-64 bg-gray-100 rounded p-3 shadow min-h-[200px] relative"
+        className="w-64 bg-gray-200 rounded p-3 shadow min-h-[200px] relative"
       >
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-sm font-bold">{column.title}</h2>

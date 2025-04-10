@@ -74,7 +74,11 @@ const Card = ({ card, columnId }: CardProps) => {
       </span>
 
       <h3 className="font-medium">{card.title}</h3>
-      <p className="text-sm text-gray-500">{card.description}</p>
+      <p
+        className="text-sm text-gray-500"
+      >
+        {card.description}
+      </p>
       <div className="text-xs text-gray-400 mt-1">👤 {card.assignedTo}</div>
 
       <EditCardModal

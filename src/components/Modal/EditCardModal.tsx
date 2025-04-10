@@ -42,8 +42,8 @@ const EditCardModal = ({ isOpen, onClose, card, columnId }: Props) => {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-lg font-semibold mb-4">Editar Tarefa</h2>
+      <div className="bg-white p-6 gap-4 flex flex-col rounded shadow-md w-full max-w-md">
+        <h2 className="text-lg font-semibold mb-1">Editar Tarefa</h2>
 
         <input
           className="w-full mb-2 p-2 border rounded"
@@ -64,7 +64,7 @@ const EditCardModal = ({ isOpen, onClose, card, columnId }: Props) => {
           onChange={(e) => setAssignee(e.target.value)}
         />
 
-        <label className="block text-sm font-medium mb-1">Prioridade</label>
+        <label className="block text-sm font-medium">Prioridade</label>
         <select
           value={priority}
           onChange={(e) => setPriority(e.target.value as Priority)}

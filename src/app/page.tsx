@@ -11,7 +11,7 @@ export default function HomePage() {
   useSyncToBackend()
 
   return (
-    <div className="flex h-screen w-full overflow-y-hidden bg-gray-100">
+    <div className="flex h-screen w-full overflow-y-hidden bg-white">
       <Sidebar />
       <div className="flex flex-col flex-1">
         <Navbar />

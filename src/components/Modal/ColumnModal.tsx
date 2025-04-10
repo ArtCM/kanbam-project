@@ -31,10 +31,10 @@ const ColumnModal = ({ isOpen, onClose }: ColumnModalProps) => {
           placeholder="Título da coluna"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-2 border rounded mb-4 outline-blue-500"
+          className="w-full p-2 border rounded outline-blue-500"
         />
 
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end gap-2 mt-4">
           <button
             onClick={onClose}
             className="px-4 py-2 text-sm bg-gray-100 rounded hover:bg-gray-200"

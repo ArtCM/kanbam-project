@@ -34,7 +34,7 @@ const ProjectModal = ({ isOpen, onClose }: ProjectModalProps) => {
           className="w-full p-2 border rounded outline-blue-500 mb-4"
         />
 
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end gap-2 mt-4">
           <button
             onClick={onClose}
             className="px-4 py-2 text-sm bg-gray-100 rounded hover:bg-gray-200"

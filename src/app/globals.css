@@ -32,6 +32,9 @@
 
 :root {
   --font-primary: "Exo";
+  --primary: "#E1E4E8";
+
+  --terciary: "#1976D2";
 }
 
 body {
@@ -41,5 +44,9 @@ body {
 }
 
 body :where(p, h1, h2, h3, strong, span) {
+  word-wrap: break-word;  
+  word-break: break-word;
+  overflow-wrap: break-word;
+  
   @apply text-[#2E3A59];
 }
