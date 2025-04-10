@@ -1,15 +1,26 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import ProjectModal from '../Modal/ProjectModal'
+import { useEffect, useState } from "react";
+import { useKanbanStore } from "@/store/kanbanStore";
+import ProjectModal from "../Modal/ProjectModal";
 
 const Navbar = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [mounted, setMounted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const activeProject = useKanbanStore((state) => state.getActiveProject());
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <>
-      <header className="flex items-center justify-between px-6 py-4 bg-white shadow-sm">
-        <h1 className="text-xl font-semibold">Nome do Projeto</h1>
+      <header className="flex items-center justify-start gap-20 px-6 py-4 bg-white shadow-sm">
+        <h1 className="text-xl font-semibold">
+          {mounted
+            ? activeProject?.name || "Nome do Projeto"
+            : "Nome do Projeto"}
+        </h1>
         <button
           onClick={() => setIsModalOpen(true)}
           className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
@@ -18,9 +29,12 @@ const Navbar = () => {
         </button>
       </header>
 
-      <ProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <ProjectModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

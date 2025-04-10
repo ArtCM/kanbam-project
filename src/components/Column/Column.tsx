@@ -1,34 +1,35 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Column as ColumnType } from '@/types/Project'
-import Card from '../Card/Card'
-import { useKanbanStore } from '@/store/kanbanStore'
-import TaskModal from '../Modal/TaskModal'
+import { useState } from "react";
+import { Column as ColumnType } from "@/types/Project";
+import Card from "../Card/Card";
+import { useKanbanStore } from "@/store/kanbanStore";
+import TaskModal from "../Modal/TaskModal";
 
 interface ColumnProps {
-  column: ColumnType
+  column: ColumnType;
 }
 
 const Column = ({ column }: ColumnProps) => {
-  const { draggedCard, moveCard, clearDraggedCard, removeColumn } = useKanbanStore()
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
+  const { draggedCard, moveCard, clearDraggedCard, removeColumn } =
+    useKanbanStore();
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
   const handleDrop = () => {
     if (draggedCard && draggedCard.columnId !== column.id) {
-      moveCard(draggedCard.cardId, draggedCard.columnId, column.id)
+      moveCard(draggedCard.cardId, draggedCard.columnId, column.id);
     }
-    clearDraggedCard()
-  }
+    clearDraggedCard();
+  };
 
   const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
   const handleRemove = () => {
-    const confirmed = confirm(`Deseja excluir a coluna "${column.title}"?`)
-    if (confirmed) removeColumn(column.id)
-  }
+    const confirmed = confirm(`Deseja excluir a coluna "${column.title}"?`);
+    if (confirmed) removeColumn(column.id);
+  };
 
   return (
     <>
@@ -48,9 +49,9 @@ const Column = ({ column }: ColumnProps) => {
           </button>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 mb-3 mt-3">
           {column.cards.map((card) => (
-            <Card key={card.id} card={card} />
+            <Card key={card.id} card={card} columnId={column.id} />
           ))}
         </div>
 
@@ -68,7 +69,7 @@ const Column = ({ column }: ColumnProps) => {
         columnId={column.id}
       />
     </>
-  )
-}
+  );
+};
 
-export default Column
+export default Column;

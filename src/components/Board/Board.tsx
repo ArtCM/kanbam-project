@@ -13,12 +13,12 @@ const Board = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const timeout = setTimeout(() => {
-      setIsLoading(false)
-    }, 400)
-    return () => clearTimeout(timeout)
-  }, [activeProjectId])
+      setIsLoading(false);
+    }, 400);
+    return () => clearTimeout(timeout);
+  }, [activeProjectId]);
 
   if (isLoading) return <Loading />;
 
@@ -36,17 +36,19 @@ const Board = () => {
     <>
       <div className="h-full p-4">
         {hasColumns ? (
-          <div className="flex gap-4 overflow-x-auto w-full">
-            {activeProject.columns.map((column) => (
-              <Column key={column.id} column={column} />
-            ))}
+          <div className="w-full h-full overflow-x-auto">
+            <div className="flex gap-4 w-max min-h-full pb-2">
+              {activeProject.columns.map((column) => (
+                <Column key={column.id} column={column} />
+              ))}
 
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="min-w-[250px] h-fit p-4 bg-gray-200 rounded hover:bg-gray-300"
-            >
-              ➕ Adicionar Coluna
-            </button>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="min-w-[250px] h-fit p-4 bg-gray-200 rounded hover:bg-gray-300"
+              >
+                ➕ Adicionar Coluna
+              </button>
+            </div>
           </div>
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
