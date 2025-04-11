@@ -18,6 +18,7 @@ interface KanbanState {
   projects: Project[];
   activeProjectId: string | null;
   draggedCard: DraggedCard | null;
+  draggedColumnIndex: number | null;
 
   // Ações
   createProject: (name: string) => void;
@@ -26,14 +27,20 @@ interface KanbanState {
 
   addColumn: (title: string) => void;
   removeColumn: (columnId: string) => void;
+  reorderColumn: (fromIndex: number, toIndex: number) => void;
 
   addCard: (columnId: string, card: Card) => void;
   removeCard: (columnId: string, cardId: string) => void;
   updateCard: (columnId: string, updatedCard: Card) => void;
   moveCard: (cardId: string, sourceColId: string, targetColId: string) => void;
 
+  reorderCard: (columnId: string, fromIndex: number, toIndex: number) => void;
+
   setDraggedCard: (cardId: string, columnId: string) => void;
   clearDraggedCard: () => void;
+
+  setDraggedColumnIndex: (index: number) => void;
+  clearDraggedColumn: () => void;
 
   // Getter como função
   getActiveProject: () => Project | null;
@@ -45,6 +52,7 @@ export const useKanbanStore = create<KanbanState>()(
       projects: [],
       activeProjectId: null,
       draggedCard: null,
+      draggedColumnIndex: null,
       userName: null,
       userRole: null,
       hasHydrated: false,
@@ -102,7 +110,6 @@ export const useKanbanStore = create<KanbanState>()(
         );
 
         set({ projects: updatedProjects });
-        console.log("Projetos atualizados:", updatedProjects);
       },
 
       removeColumn: (columnId) => {
@@ -117,6 +124,26 @@ export const useKanbanStore = create<KanbanState>()(
               }
             : p
         );
+
+        set({ projects: updatedProjects });
+      },
+
+      reorderColumn: (fromIndex, toIndex) => {
+        const { activeProjectId, projects } = get();
+        if (!activeProjectId) return;
+
+        const updatedProjects = projects.map((project) => {
+          if (project.id !== activeProjectId) return project;
+
+          const updatedColumns = [...project.columns];
+          const [movedColumn] = updatedColumns.splice(fromIndex, 1);
+          updatedColumns.splice(toIndex, 0, movedColumn);
+
+          return {
+            ...project,
+            columns: updatedColumns,
+          };
+        });
 
         set({ projects: updatedProjects });
       },
@@ -231,6 +258,33 @@ export const useKanbanStore = create<KanbanState>()(
         set({ projects: updatedProjects });
       },
 
+      reorderCard: (columnId, fromIndex, toIndex) => {
+        const { activeProjectId, projects } = get();
+        if (!activeProjectId) return;
+
+        const updatedProjects = projects.map((project) => {
+          if (project.id !== activeProjectId) return project;
+
+          return {
+            ...project,
+            columns: project.columns.map((column) => {
+              if (column.id !== columnId) return column;
+
+              const updatedCards = [...column.cards];
+              const [movedCard] = updatedCards.splice(fromIndex, 1);
+              updatedCards.splice(toIndex, 0, movedCard);
+
+              return {
+                ...column,
+                cards: updatedCards,
+              };
+            }),
+          };
+        });
+
+        set({ projects: updatedProjects });
+      },
+
       setDraggedCard: (cardId, columnId) => {
         set({ draggedCard: { cardId, columnId } });
       },
@@ -238,6 +292,10 @@ export const useKanbanStore = create<KanbanState>()(
       clearDraggedCard: () => {
         set({ draggedCard: null });
       },
+
+      setDraggedColumnIndex: (index) => set({ draggedColumnIndex: index }),
+
+      clearDraggedColumn: () => set({ draggedColumnIndex: null }),
     }),
     {
       name: "kanban-multi-projects",

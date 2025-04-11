@@ -11,14 +11,24 @@ interface ColumnProps {
 }
 
 const Column = ({ column }: ColumnProps) => {
-  const { draggedCard, moveCard, clearDraggedCard, removeColumn } =
+  const { draggedCard, moveCard, reorderCard, clearDraggedCard, removeColumn } =
     useKanbanStore();
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
-  const handleDrop = () => {
-    if (draggedCard && draggedCard.columnId !== column.id) {
+  const handleDrop = (toIndex: number) => {
+    if (!draggedCard) return;
+
+    if (draggedCard.columnId === column.id) {
+      const fromIndex = column.cards.findIndex(
+        (c) => c.id === draggedCard.cardId
+      );
+      if (fromIndex === -1 || toIndex === undefined) return;
+
+      reorderCard(column.id, fromIndex, toIndex);
+    } else {
       moveCard(draggedCard.cardId, draggedCard.columnId, column.id);
     }
+
     clearDraggedCard();
   };
 
@@ -34,9 +44,12 @@ const Column = ({ column }: ColumnProps) => {
   return (
     <>
       <div
-        onDrop={handleDrop}
+        onDrop={() => {
+          const toIndex = column.cards.length; 
+          handleDrop(toIndex);
+        }}
         onDragOver={handleDragOver}
-        className="w-64 bg-gray-200 rounded p-3 shadow min-h-[200px] relative"
+        className="w-64 bg-gray-200 rounded p-3 shadow min-h-[200px] h-full relative"
       >
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-sm font-bold">{column.title}</h2>
@@ -50,8 +63,14 @@ const Column = ({ column }: ColumnProps) => {
         </div>
 
         <div className="space-y-2 mb-3 mt-3">
-          {column.cards.map((card) => (
-            <Card key={card.id} card={card} columnId={column.id} />
+          {column.cards.map((card, index) => (
+            <div
+              key={card.id}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={() => handleDrop(index)}
+            >
+              <Card card={card} columnId={column.id} />
+            </div>
           ))}
         </div>
 

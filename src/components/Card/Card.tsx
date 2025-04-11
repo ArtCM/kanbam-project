@@ -44,12 +44,15 @@ const Card = ({ card, columnId }: CardProps) => {
     <div
       className="bg-white p-3 rounded shadow cursor-grab border-l-4 relative"
       draggable
-      onDragStart={handleDragStart}
+      onDragStart={(e) => {
+        e.stopPropagation();
+        handleDragStart();
+      }}
       style={{
         borderColor: card.priority === "Urgente" ? "#ef4444" : "#3b82f6",
       }}
     >
-      {/* Botão de excluir no canto superior direito */}
+      {/* Botão de excluir */}
       <button
         onClick={handleRemove}
         title="Excluir tarefa"

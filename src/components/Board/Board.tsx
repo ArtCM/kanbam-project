@@ -7,8 +7,16 @@ import ColumnModal from "../Modal/ColumnModal";
 import Loading from "../Loading/Loading";
 
 const Board = () => {
-  const activeProject = useKanbanStore((state) => state.getActiveProject());
-  const activeProjectId = useKanbanStore((state) => state.activeProjectId);
+  const {
+    getActiveProject,
+    activeProjectId,
+    reorderColumn,
+    draggedColumnIndex,
+    setDraggedColumnIndex,
+    clearDraggedColumn,
+  } = useKanbanStore();
+
+  const activeProject = getActiveProject();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,39 +38,42 @@ const Board = () => {
     );
   }
 
-  const hasColumns = activeProject.columns.length > 0;
+  const handleDragStartColumn = (index: number) => {
+    setDraggedColumnIndex(index);
+  };
+
+  const handleDropColumn = (toIndex: number) => {
+    if (draggedColumnIndex === null || draggedColumnIndex === toIndex) return;
+    reorderColumn(draggedColumnIndex, toIndex);
+    clearDraggedColumn();
+  };
 
   return (
     <>
       <div className="h-full p-4">
-        {hasColumns ? (
-          <div className="w-full h-full overflow-x-auto">
-            <div className="flex gap-4 w-max min-h-full pb-2">
-              {activeProject.columns.map((column) => (
-                <Column key={column.id} column={column} />
-              ))}
-
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="min-w-[250px] h-fit p-4 bg-gray-200 rounded hover:bg-gray-300"
+        <div className="w-full h-full overflow-x-auto">
+          <div className="flex gap-4 w-max min-h-full pb-2">
+            {activeProject.columns.map((column, index) => (
+              <div
+                key={column.id}
+                draggable
+                onDragStart={() => handleDragStartColumn(index)}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={() => handleDropColumn(index)}
+                className="select-none"
               >
-                ➕ Adicionar Coluna
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
-            <p className="text-gray-500 text-lg">
-              Você ainda não tem nenhuma coluna adicionada
-            </p>
+                <Column column={column} />
+              </div>
+            ))}
+
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="min-w-[250px] h-fit p-4 bg-gray-200 rounded hover:bg-gray-300"
             >
-              ➕ Criar primeira coluna
+              ➕ Adicionar Coluna
             </button>
           </div>
-        )}
+        </div>
       </div>
 
       <ColumnModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
