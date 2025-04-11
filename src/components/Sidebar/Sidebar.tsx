@@ -11,6 +11,10 @@ const Sidebar = () => {
   const { userName, userRole } = useKanbanStore();
   const [isEditing, setIsEditing] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [draggedProjectIndex, setDraggedProjectIndex] = useState<number | null>(
+    null
+  );
+  const reorderProjects = useKanbanStore((s) => s.reorderProjects);
 
   const handleDeleteProject = (projectId: string) => {
     const confirmDelete = window.confirm(
@@ -61,9 +65,21 @@ const Sidebar = () => {
               </p>
             ) : (
               <ul className="space-y-2">
-                {projects.map((project) => (
+                {projects.map((project, index) => (
                   <li
                     key={project.id}
+                    draggable
+                    onDragStart={() => setDraggedProjectIndex(index)}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={() => {
+                      if (
+                        draggedProjectIndex !== null &&
+                        draggedProjectIndex !== index
+                      ) {
+                        reorderProjects(draggedProjectIndex, index);
+                        setDraggedProjectIndex(null);
+                      }
+                    }}
                     onClick={() => switchProject(project.id)}
                     className={`p-2 text-md rounded text-center cursor-pointer ${
                       project.id === activeProjectId
@@ -72,11 +88,10 @@ const Sidebar = () => {
                     }`}
                   >
                     {project.name}
-                    
                     <button
                       className="text-sm text-red-600 ml-4"
                       onClick={(e) => {
-                        e.stopPropagation(); 
+                        e.stopPropagation();
                         handleDeleteProject(project.id);
                       }}
                     >

@@ -24,6 +24,7 @@ interface KanbanState {
   createProject: (name: string) => void;
   switchProject: (id: string) => void;
   removeProject: (projectId: string) => void;
+  reorderProjects: (fromIndex: number, toIndex: number) => void;
 
   addColumn: (title: string) => void;
   removeColumn: (columnId: string) => void;
@@ -86,6 +87,15 @@ export const useKanbanStore = create<KanbanState>()(
             (project) => project.id !== projectId
           ),
         }));
+      },
+
+      reorderProjects: (fromIndex, toIndex) => {
+        set((state) => {
+          const updated = [...state.projects];
+          const [moved] = updated.splice(fromIndex, 1);
+          updated.splice(toIndex, 0, moved);
+          return { projects: updated };
+        });
       },
 
       getActiveProject: () => {
